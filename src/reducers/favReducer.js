@@ -12,17 +12,17 @@ export const favReducer = (state = initialState, action) => {
         case types.selectFav:
             return {
                 ...state,
-                fav: [...state.fav, action.payload]
+                fav: [...state.fav, action.payload] //state anterior + payload
             }
 
         case types.deleteFav:
             return {
-                fav: state.fav.filter( char =>  char !== action.payload)
+                fav: state.fav.filter( char =>  char !== action.payload) //filtro el state segun el payload que me llega
             }
 
         case types.deleteAll:
             return {
-                fav: initialState.fav
+                fav: initialState.fav //estado inicial = []
             }
 
         default:

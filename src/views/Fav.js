@@ -21,7 +21,7 @@ const Fav = () => {
         fav.map((char, i) => (
           <Character
             character={char}
-            check={ true }
+            check={ true } //prop que va determinar si el btn es de add o delete
             key={i}
           />
         ))
