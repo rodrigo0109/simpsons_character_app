@@ -5,7 +5,7 @@ import '../App.css'
 
 const Character = ({ character, check }) => {
   
-  console.log(character.character)
+  //console.log(character.character)
 
   const dispatch = useDispatch();
 

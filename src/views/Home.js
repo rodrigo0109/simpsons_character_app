@@ -1,66 +1,91 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
+import { connect, useDispatch } from 'react-redux';
+import { searchCharacters, startCharacters } from '../actions/favActions';
 import Character from '../components/Character';
 
 
-const Home = () => {
+const Home = ({ characters }) => {
 
-    const [data, setData] = useState([])
-    const [char, setChar] = useState('https://thesimpsonsquoteapi.glitch.me/quotes?count=30')
-    const [loading, setLoading] = useState('Loading...')
-    const [alert, setAlert] = useState('nofound alert alert-success')
+    const [input, setInput] = useState('')
+    const [loader, setLoader] = useState({
+        loading: 'Loading...',
+        alert: 'success',
+        reset: false
+    })
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        handleCharacters()
-    }, [char])
+        dispatch(startCharacters()) //Al renderizar por primera vez traigo los characters 
+    }, [])
 
-    const url = char //url del state predeterminada
-
-    const handleCharacters = () => {
-        fetch(url)
-            .then((response) => response.json())
-            .then((data) => { setData(data) }) //guardo la data que retorna en el estado
-    }
+    useEffect(() => {
+        if (input.length === 0) {
+            dispatch(startCharacters()) //si vacio el input manualmente ne trae los characters
+            setLoader({
+                ...loader,
+                reset: false
+            })
+        }
+    }, [input])
 
     const handleInputChange = (e) => {
-        console.log(e.target.value)
-        let character = e.target.value
-        if (character.length === 0) {
-            setLoading('Loading...')
-            setAlert('nofound alert alert-success')
-            setChar('https://thesimpsonsquoteapi.glitch.me/quotes?count=30') //si el input esta vacio url = original
-        }
-        setLoading('No character found')
-        setAlert('nofound alert alert-danger')
-        setChar(`https://thesimpsonsquoteapi.glitch.me/quotes?count=30&character=${character}`) //cambio el state por la url con el character que deseo buscar
+        setInput(e.target.value)
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        dispatch(searchCharacters(input)) //Al hacer submmit mando al action el character indicado para traerlo con el fetch
+        setLoader({
+            loading: 'No character found',
+            alert: 'danger',
+            reset: true
+        })
     }
 
     return (
         <div className='home-container animate__animated animate__fadeIn'>
             <div className='form-container'>
                 <div className='logo-container'></div>
-                <form className='form d-flex form'>
+                <form className='form d-flex form' onSubmit={handleSubmit}>
+                    {
+                        loader.reset &&
+                        <button className='animate__animated animate__fadeIn btn btn-primary btn-danger clear' onClick={() => {
+                            setInput('') //vacio el input
+                            setLoader({
+                                loading: 'Loading...',
+                                alert: 'success',
+                                reset: false
+                            })
+                        }}>X</button>
+                    }
                     <input
                         className='form-control me-2 input'
                         type="text"
                         placeholder="Search by character..."
+                        value={input}
                         onChange={handleInputChange}
                     />
+                    <button className='btn-search' type='submit'>Search</button>
                 </form>
             </div>
             {
-                data.length > 0 ?  /* si la data contiene info procedo */
-                    data.map((character, i) => (
+                //console.log(characters.characters)
+            }
+            {
+                characters.characters.length > 0 ? //si hay characters en el arreglo de mi state procedo
+                    characters.characters.map((character, i) => (
                         <Character
                             character={character}
                             key={i}
                         />
                     ))
                     :
-                    <div className={alert}>
-                        {loading}
-                        <div class="spinner spinner-border" role="status">
-                            <span class="visually-hidden"></span>
+                    <div className={`nofound alert alert-${loader.alert}`}>
+                        {loader.loading}
+                        <div className="spinner spinner-border" role="status">
+                            <span className="visually-hidden"></span>
                         </div>
                     </div>
             }
@@ -68,4 +93,10 @@ const Home = () => {
     )
 }
 
-export default Home
+const mapStateToProps = (state) => {
+    return {
+        characters: state.select
+    }
+}
+
+export default connect(mapStateToProps, null)(Home)

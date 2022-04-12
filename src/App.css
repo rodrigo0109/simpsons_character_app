@@ -66,17 +66,38 @@
 }
 
 .form {
-  width: 60%;
+  width: 600px;
   margin: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  /* border: 1px solid red; */
+  position: relative;
+}
+
+.clear {
+  position: absolute;
+  left: 0;
+}
+
+.input {
+  width: 400px;
 }
 
 .btn-search {
+  width: 100px;
+  height: 35px;
   background-color: #ff9f1c;
   color: #011627;
   outline: none;
   border: none;
   border-radius: 6px;
   transition: 0.2s ease;
+}
+.btn-search:hover {
+  color: #011627;
+  background-color: #f3ba6a;
 }
 
 .fav-container {
@@ -168,6 +189,12 @@
   }
   .form {
     width: 100%;
+  }
+  .input {
+    width: 200px;
+  }
+  .clear{
+    left: -30px;
   }
 
   .fav-container h1 {
