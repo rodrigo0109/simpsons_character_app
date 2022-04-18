@@ -78,7 +78,7 @@ const Home = ({ characters }) => {
                 //console.log(characters.characters)
             }
             {
-                characters.characters.length === 30 ? //si hay characters en el arreglo de mi state procedo
+                characters.characters.length > 0 ? //si hay characters en el arreglo de mi state procedo
                     characters.characters.map((character, i) => (
                         <Character
                             character={character}
