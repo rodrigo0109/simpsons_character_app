@@ -12,6 +12,7 @@ import {
 } from "react-router-dom";
 import { store } from './store/store';
 import { Provider } from 'react-redux';
+import CharacterDetail from './views/CharacterDetail';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
       <Routes>
         <Route path='/' exact element={ <Home /> } />
         <Route path='/favoritos' element={ <Fav /> }/>
+        <Route path='/character/:character' element={ <CharacterDetail /> }/>
       </Routes>
     </Router>
     </Provider>

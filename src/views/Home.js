@@ -30,6 +30,15 @@ const Home = ({ characters }) => {
         }
     }, [input])
 
+    const inputClear = () => {
+        setInput('') //vacio el input
+        setLoader({
+            loading: 'Loading...',
+            alert: 'success',
+            reset: false
+        })
+    }
+
     const handleInputChange = (e) => {
         setInput(e.target.value)
     }
@@ -51,14 +60,7 @@ const Home = ({ characters }) => {
                 <form className='form d-flex form' onSubmit={handleSubmit}>
                     {
                         loader.reset &&
-                        <button className='animate__animated animate__fadeIn btn btn-primary btn-danger clear' onClick={() => {
-                            setInput('') //vacio el input
-                            setLoader({
-                                loading: 'Loading...',
-                                alert: 'success',
-                                reset: false
-                            })
-                        }}>X</button>
+                        <button className='animate__animated animate__fadeIn btn btn-primary btn-danger clear' onClick={inputClear}>X</button>
                     }
                     <input
                         className='form-control me-2 input'
@@ -74,7 +76,7 @@ const Home = ({ characters }) => {
                 //console.log(characters.characters)
             }
             {
-                characters.characters.length > 0 ? //si hay characters en el arreglo de mi state procedo
+                characters.characters.length === 30 ? //si hay characters en el arreglo de mi state procedo
                     characters.characters.map((character, i) => (
                         <Character
                             character={character}

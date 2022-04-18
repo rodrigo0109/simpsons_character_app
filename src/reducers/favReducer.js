@@ -22,6 +22,12 @@ export const favReducer = (state = initialState, action) => {
                 characters: action.payload
             }
 
+        case types.getCharacterDetail:
+            return {
+                ...state,
+                characters: action.payload
+            }
+
         case types.selectFav:
             return {
                 ...state,
