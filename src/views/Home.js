@@ -18,6 +18,7 @@ const Home = ({ characters }) => {
 
     useEffect(() => {
         dispatch(startCharacters()) //Al renderizar por primera vez traigo los characters 
+         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
@@ -28,6 +29,7 @@ const Home = ({ characters }) => {
                 reset: false
             })
         }
+         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [input])
 
     const inputClear = () => {

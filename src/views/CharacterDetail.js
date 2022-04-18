@@ -16,6 +16,7 @@ const CharacterDetail = () => {
     console.log(state.characters[0].character) */
     useEffect(() => {
         dispatch(getCharactersDetail(params.character))
+         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
